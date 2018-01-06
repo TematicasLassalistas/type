@@ -1,0 +1,84 @@
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2016 by anonymous (http://jsbin.com/fayelayesa/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<h1>Type, type, type</h1>
+<p id="demo">A virus has reached every computer on the internet. The computers can no longer copy and paste text. Your job is to copy classic writing by hand</p>
+<!--<p>  Warning: every mistake you make is discounted on your paycheck. Backscape is forbidden and disobedience will be punished.</p>-->
+<p id="text">Type to Start.</p>
+
+<script type="text/javascript">
+  var flag = false; 
+  var i = 0;
+  var Mon = 0;
+  var EBonus = False;
+  var Bonus = 0;
+  
+  function keyup(e){
+    var keynum;
+    var x = document.getElementById("text");
+    var str = "Type to Start. HOPE. By Emily Dickinson. HOPE is the thing with feathers That perches in the soul, And sings the tune without the words, And never stops at all, And sweetest in the gale is heard; And sore must be the storm That could abash the little bird That kept so many warm. I 've heard it in the chillest land, And on the strangest sea; Yet, never, in extremity, It asked a crumb of me. "
+        
+    var max = str.length;
+    var once = true;
+    var res = 0;
+    if(window.event) { // IE                    
+      keynum = e.keyCode;
+    } else if(e.which){ // Netscape/Firefox/Opera                   
+      keynum = e.which;
+    }
+    if (i>str.length){
+    }else {
+    var flag = true;
+    }
+    
+    while (flag == true){ //for the loop go through the text to write
+      res = str.slice(i+1,i+15); //erases the text that was already typed
+      document.getElementById("text").innerHTML = res;
+      i+=1;
+      if (str.charAt(i-1)===String.fromCharCode(keynum)){
+        x.style.color = "green"; //user typed right
+        Mon += 0.01;
+        if (EBonus==true){
+          Bonus += 1;
+          Mon += +0.01*(Bonus+1)
+          }
+      }else{
+        x.style.color = "red"; //user typed wrong
+        Bonus = 0;
+        //Mon -= 1;
+      }
+       if (Mon>1000){
+        document.getElementById("money").innerHTML = "Money: " +
+          Mon.toExponential(3);
+      }else {document.getElementById("money").innerHTML = "Money: " + Mon;
+      }
+      flag = false;
+    }
+  }
+    //alert(String.fromCharCode(keynum));
+  function buybon(){
+    if (Mon>=10 && EBonus!=true){
+    //if (Mon>10){
+      EBonus = true;
+      Mon -= 10;
+      document.getElementById("money").innerHTML = "Money: " + Mon;
+      
+      
+    }else{
+      document.getElementById("money").innerHTML = "Money:" + Mon + 
+        " is not enough or you bought it already" ;
+    }
+  }
+</script>
+
+<form>
+  <input type="text" onkeypress="return keyup(event)"/>
+</form>
+<p id="money">Money: </p>
+<button onclick="buybon()"; title = 'when you type fast and correctly you get more Money/type. This costs $$$' type="button">Buy Bonus</button> 
